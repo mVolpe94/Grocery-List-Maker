@@ -3,8 +3,10 @@
 
 import ingredient
 import excel_reader as er
+import state
 import meal
-import utility as utl
+import utility as old_utl
+import new_utility as utl
 import os
 from colorama import init as colorama_init
 from colorama import Fore
@@ -12,23 +14,36 @@ from colorama import Style
 
 os.system("cls")
 
-meal_obj_list = []
-SHEETS = er.get_sheet_names()
+s = state.State()
 
-running = True
-control = "start"
+while s.running:
 
-while running:
   utl.splash_message()
-  print() 
-  if control == "start":
-    print(f"{Fore.LIGHTYELLOW_EX}Welcome to Kate's Grocery List Maker!{Style.RESET_ALL}")
-    print()
-    control = "mea"
+  print()
+  utl.display_cur_choices(s.meal_obj_list, s.SHEETS)
+
+  match s.control.index(s.next):
+    case 0:
+      print(f"{Fore.LIGHTYELLOW_EX}Welcome to Kate's Grocery List Maker!{Style.RESET_ALL}")
+      print()
+      s.next = s.control[1]
+    case 1:
+      utl.display_meal_cat_menu(s.SHEETS)
+    case 2:
+      ...
+    case 3:
+      ...
+    case 4:
+      ...
+    case 5:
+      ...
+    case 6:
+      ...
+  
   
   #Display current meal choices
-  utl.display_cur_choices(meal_obj_list)
+  utl.display_cur_choices(s.meal_obj_list)
 
   #Meal category menu
-  if inp == 
+
 
