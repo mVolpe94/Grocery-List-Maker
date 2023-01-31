@@ -18,6 +18,7 @@ def display_meal_cat_menu(sheets):
     Takes list of excel sheet titles and displays meal categories
   '''
   print("Please select what category of meals by typing the number beside your choice")
+  print()
   length = len(sheets)
   for num in range(length):
     print(f"{num + 1}) {sheets[num]}")
@@ -52,3 +53,14 @@ def display_cur_choices(meal_obj_list, sheets):
         for meal_title in temp_selections[sheet_name]:
           print(f" - {meal_title}")
         print()
+
+
+def input_int_check(inp, range):
+  try:
+    sel = int(inp)
+  except:
+    return False
+  if sel > 0 and sel <= len(range):
+    return True
+  else:
+    return False
