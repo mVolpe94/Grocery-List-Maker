@@ -55,6 +55,20 @@ def display_cur_choices(meal_obj_list, sheets):
         print()
 
 
+def display_meal_menu(sheet):
+  meals = er.get_col_names(sheet)
+
+  print("Please type the number of each meal you would like to add separated by a space")
+  print()
+
+  for num in range(len(meals)):
+    print(f"{num + 1}) {meals[num]}")
+  print()
+
+  return meals
+
+
+
 def input_int_check(inp, range):
   try:
     sel = int(inp)
@@ -64,3 +78,4 @@ def input_int_check(inp, range):
     return True
   else:
     return False
+

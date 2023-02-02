@@ -12,26 +12,28 @@ from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
 
-os.system("cls")
+
 
 s = state.State()
 is_correct = True
 error_message = None
 
 while s.running:
-
+  os.system("cls")
   utl.splash_message()
   print()
 
-  if s.next == s.control[0]:
+  if s.next == s.CONTROL[0]:
     print(f"{Fore.LIGHTYELLOW_EX}Welcome to Kate's Grocery List Maker!{Style.RESET_ALL}")
     print()
-    s.next = s.control[1]
+    s.next = s.CONTROL[1]
   else:
     utl.display_cur_choices(s.meal_obj_list, s.SHEETS)
 
-  frame = s.control.index(s.next)
+  frame = s.CONTROL.index(s.next)
+  
   match frame:
+
     #Meal Category Frame
     case 1:
       utl.display_meal_cat_menu(s.SHEETS)
@@ -43,13 +45,36 @@ while s.running:
 
       if is_correct:
         s.meal_sheet = s.SHEETS[int(s.inp) - 1]
-        s.next = s.control[1]
+        s.next = s.CONTROL[2]
+
     #Meal Selection Frame
     case 2:
-      ...
+      meals = utl.display_meal_menu(s.meal_sheet)
+      if not is_correct:
+        print(f"{Fore.RED}ERROR: One or more selections were out of range, please try again.{Style.RESET_ALL}")
+        print(f"{Fore.LIGHTRED_EX}Previous Attempt: {s.inp}{Style.RESET_ALL}")
+
+      s.inp = input("Selection(s): ")
+      inp_list = s.inp.split(" ")
+      
+      for inp in inp_list.copy():
+        if inp == "":
+          inp_list.remove(inp)
+        else:
+          check_buffer = utl.input_int_check(inp, meals)
+          if check_buffer == False:
+            is_correct = False
+      
+      if is_correct:
+        for inp in inp_list:
+          s.add_meal(meals[int(inp) - 1], s.meal_sheet)
+        s.next = s.CONTROL[3]
+
+
     #Add More? Frame
     case 3:
-      ...
+      
+      break
     #Remove Selections Frame
     case 4:
       ...
@@ -59,7 +84,8 @@ while s.running:
   
   
   if s.inp.lower() == "r":
-    s.next = s.control[4]
+    s.next = s.CONTROL[1]
+    is_correct = True
   
 
 
