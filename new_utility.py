@@ -68,7 +68,6 @@ def display_meal_menu(sheet):
   return meals
 
 
-
 def input_int_check(inp, range):
   try:
     sel = int(inp)

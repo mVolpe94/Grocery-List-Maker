@@ -62,6 +62,7 @@ while s.running:
           inp_list.remove(inp)
         else:
           check_buffer = utl.input_int_check(inp, meals)
+          is_correct = True
           if check_buffer == False:
             is_correct = False
       
@@ -70,11 +71,20 @@ while s.running:
           s.add_meal(meals[int(inp) - 1], s.meal_sheet)
         s.next = s.CONTROL[3]
 
-
     #Add More? Frame
     case 3:
-      
-      break
+      if not is_correct:
+        print(f"{Fore.RED}ERROR: Input not recognized, please press enter or type a 'y' or 'n' to proceed.{Style.RESET_ALL}")
+      inp = input("Would you like to select more meals? (Y/n): ")
+
+      if inp == "" or inp.lower() == "y":
+        s.next = s.CONTROL[1]
+      elif inp.lower() == "n":
+        s.next = s.CONTROL[5]
+      else:
+        is_correct = False
+
+
     #Remove Selections Frame
     case 4:
       ...
