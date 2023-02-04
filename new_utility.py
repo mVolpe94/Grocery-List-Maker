@@ -19,10 +19,8 @@ def display_meal_cat_menu(sheets):
   '''
   print("Please select what category of meals by typing the number beside your choice")
   print()
-  length = len(sheets)
-  for num in range(length):
-    print(f"{num + 1}) {sheets[num]}")
-  print()
+  
+  display_numbered_list(sheets)
 
 
 #Error where after selecting a different meal category and there is only one selection in a previous category
@@ -61,11 +59,25 @@ def display_meal_menu(sheet):
   print("Please type the number of each meal you would like to add separated by a space")
   print()
 
-  for num in range(len(meals)):
-    print(f"{num + 1}) {meals[num]}")
-  print()
+  display_numbered_list(meals)
 
   return meals
+
+
+def display_remove_menu(meal_obj_list):
+  print(f"{Fore.YELLOW}Select from the menu which meals you would like to remove:{Style.RESET_ALL}")
+  print()
+
+  display_numbered_list(meal_obj_list)
+
+
+def display_numbered_list(string_list):
+  if isinstance(string_list, list):
+    for num in range(len(string_list)):
+      print(f"{num + 1}) {string_list[num]}")
+    print()
+  else:
+    raise TypeError("List object expected")
 
 
 def input_int_check(inp, range):
