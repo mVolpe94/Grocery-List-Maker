@@ -87,12 +87,18 @@ while s.running:
 
     #Remove Selections Frame
     case 4:
+
+      
       utl.display_remove_menu(s.meal_obj_list)
       if not is_correct:
         print(f"{Fore.RED}ERROR: One or more selections were out of range, please try again.{Style.RESET_ALL}")
         print(f"{Fore.LIGHTRED_EX}Previous Attempt: {s.inp}{Style.RESET_ALL}")
 
       s.inp = input("Selection(s): ")
+      if s.inp.lower() == "e":
+          s.next = s.CONTROL[3]
+          
+
       input_list = s.inp.split(" ")
 
       for inp in input_list.copy():
@@ -102,9 +108,16 @@ while s.running:
           check_buffer = utl.input_int_check(inp, s.meal_obj_list)
           is_correct = True
           if check_buffer == False:
-            is_correct
+            is_correct = False
+            break
 
-      
+      if is_correct:
+        for inp in input_list:
+          s.remove_meal(int(inp) - 1)
+      else:
+        if s.inp.lower() == "e":
+          s.next = s.CONTROL[3]
+          is_correct = True
 
     #Send? Frame
     case 5:
@@ -114,7 +127,6 @@ while s.running:
   if s.inp.lower() == "r":
     s.next = s.CONTROL[4]
     is_correct = True
-  
 
 
   #Display current meal choices

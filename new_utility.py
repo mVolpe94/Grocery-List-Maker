@@ -66,9 +66,17 @@ def display_meal_menu(sheet):
 
 def display_remove_menu(meal_obj_list):
   print(f"{Fore.YELLOW}Select from the menu which meals you would like to remove:{Style.RESET_ALL}")
+  print(f"{Fore.YELLOW}Enter 'e' to exit this menu{Style.RESET_ALL}")
   print()
 
-  display_numbered_list(meal_obj_list)
+  meal_obj_list_disp = []
+  for obj in meal_obj_list:
+    if obj.amount > 1:
+      meal_obj_list_disp.append(f"{obj} ({obj.amount})")
+    else:
+      meal_obj_list_disp.append(obj)
+
+  display_numbered_list(meal_obj_list_disp)
 
 
 def display_numbered_list(string_list):

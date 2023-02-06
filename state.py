@@ -32,3 +32,12 @@ class State:
     meal_obj = meal.Meal(title, ingredients, sheet)
 
     return meal_obj
+  
+
+  def remove_meal(self, index):
+    if index < len(self.meal_obj_list):
+      obj = self.meal_obj_list[index]
+      if obj.amount > 1:
+        obj.amount -= 1
+      else:
+        self.meal_obj_list.remove(obj)
