@@ -28,9 +28,11 @@ while s.running:
     print()
     s.next = s.CONTROL[1]
   elif s.next != s.CONTROL[4]:
-    utl.display_cur_choices(s.meal_obj_list, s.SHEETS)
-
+    if s.next != s.CONTROL[6]:
+      utl.display_cur_choices(s.meal_obj_list, s.SHEETS)
+  
   frame = s.CONTROL.index(s.next)
+  s.prev_frames.append(frame)
   
   match frame:
 
@@ -122,12 +124,33 @@ while s.running:
     #Send? Frame
     case 5:
       ...
-  
+
+    #Help Frame
+    case 6:
+      utl.display_help_screen()
+      s.inp = input("Press enter to leave help screen: ")
+      if s.inp.strip() == "":
+        s.inp = "b"
+
+
   
   if s.inp.lower() == "r":
     s.next = s.CONTROL[4]
     is_correct = True
-
+  elif s.inp.lower() == "h":
+    s.next = s.CONTROL[6]
+    is_correct = True
+  elif s.inp.lower() == "b":
+    if len(s.prev_frames) >= 2:
+      prev_frame = s.prev_frames[len(s.prev_frames) - 2]
+      s.next = s.CONTROL[prev_frame]
+      s.prev_frames.pop()
+      s.prev_frames.pop()
+    else:
+      s.next = s.CONTROL[1]
+      s.prev_frames.pop()
+    is_correct = True
+    
 
   #Display current meal choices
   # utl.display_cur_choices(s.meal_obj_list)

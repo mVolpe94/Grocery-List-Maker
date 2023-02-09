@@ -27,9 +27,8 @@ def display_meal_cat_menu(sheets):
 #the temp_selections dict ignores the previous choice in that categroy
 def display_cur_choices(meal_obj_list, sheets):
   if len(meal_obj_list) > 0:
-    print()
-    print(f"{Fore.GREEN}Here are all of your selections so far:{Style.RESET_ALL}")
-    print(f"{Fore.MAGENTA}Enter 'r' to remove any current selections.{Style.RESET_ALL}")
+    print(f"{Fore.LIGHTGREEN_EX}Here are all of your selections so far:{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Enter 'r' to remove any current selections.{Style.RESET_ALL}")
     print()
     category = ""
     temp_selections = {}
@@ -86,6 +85,20 @@ def display_numbered_list(string_list):
     print()
   else:
     raise TypeError("List object expected")
+
+
+def display_help_screen():
+  print(f"{Fore.YELLOW}Welcome to the Help Screen{Style.RESET_ALL}")
+  print("Below is a list of commands and what they do:")
+  print()
+  print()
+  print("- r - Brings up the meal removal screen")
+  print()
+  print("- b - Brings you back to the previous page")
+  print()
+  print("- h - Brings up the help screen")
+  print()
+  print()
 
 
 def input_int_check(inp, range):

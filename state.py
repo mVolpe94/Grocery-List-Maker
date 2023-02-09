@@ -3,9 +3,10 @@ import meal
 
 class State:
   def __init__(self):
-    self.CONTROL = ["start", "meal_cat", "meal_select", "add_more", "remove", "send", "fin"]
+    self.CONTROL = ["start", "meal_cat", "meal_select", "add_more", "remove", "send", "help", "fin"]
     self.next = self.CONTROL[0]
     self.SHEETS = er.get_sheet_names()
+    self.prev_frames = []
     self.running = True
     
     self.inp = ""
