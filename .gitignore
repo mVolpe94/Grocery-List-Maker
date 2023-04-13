@@ -1,3 +1,10 @@
+# User Generated Files
+auth.json
+permissions.json
+gkeepapi-test.py
+note_class.py
+ztest.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

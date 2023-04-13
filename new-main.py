@@ -32,6 +32,7 @@ while s.running:
       utl.display_cur_choices(s.meal_obj_list, s.SHEETS)
   
   frame = s.CONTROL.index(s.next)
+  
   s.prev_frames.append(frame)
   
   match frame:
@@ -89,8 +90,6 @@ while s.running:
 
     #Remove Selections Frame
     case 4:
-
-      
       utl.display_remove_menu(s.meal_obj_list)
       if not is_correct:
         print(f"{Fore.RED}ERROR: One or more selections were out of range, please try again.{Style.RESET_ALL}")
@@ -99,7 +98,6 @@ while s.running:
       s.inp = input("Selection(s): ")
       if s.inp.lower() == "e":
           s.next = s.CONTROL[3]
-          
 
       input_list = s.inp.split(" ")
 
@@ -131,8 +129,6 @@ while s.running:
       s.inp = input("Press enter to leave help screen: ")
       if s.inp.strip() == "":
         s.inp = "b"
-
-
   
   if s.inp.lower() == "r":
     s.next = s.CONTROL[4]
@@ -150,11 +146,6 @@ while s.running:
       s.next = s.CONTROL[1]
       s.prev_frames.pop()
     is_correct = True
-    
 
-  #Display current meal choices
-  # utl.display_cur_choices(s.meal_obj_list)
-
-  #Meal category menu
 
 

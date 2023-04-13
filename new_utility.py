@@ -87,6 +87,17 @@ def display_numbered_list(string_list):
     raise TypeError("List object expected")
 
 
+def display_send_menu(ingt_obj_list):
+  '''
+    Displays the ingredient list with amounts to the user for final check before
+    sending out to google keep.
+      ingt_obj_list: List of ingredient objects
+  '''
+
+
+
+
+
 def display_help_screen():
   print(f"{Fore.YELLOW}Welcome to the Help Screen{Style.RESET_ALL}")
   print("Below is a list of commands and what they do:")
