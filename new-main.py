@@ -121,7 +121,9 @@ while s.running:
 
     #Send? Frame
     case 5:
-      ...
+      s.fill_ingt_list()
+      utl.display_send_menu(s.ingt_obj_list)
+      s.inp = input("Send? (Y/n):")
 
     #Help Frame
     case 6:

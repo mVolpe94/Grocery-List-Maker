@@ -4,7 +4,11 @@ class Ingredient:
   def __init__(self, title, amount=1):
     p = inflect.engine()
     self.title = title
-    self.match = str.lower(p.singular_noun(title))
+    is_plural = p.singular_noun(title)
+    if not is_plural:
+      self.match = str.lower(title)
+    else:
+      self.match = str.lower(p.singular_noun(title))
     self.amount = int(amount)
     self.listentry = self.tostring()
 

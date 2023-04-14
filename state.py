@@ -51,6 +51,7 @@ class State:
       Fills ingredient list with ingredient objects based 
       on current state of the meal object list
     '''
+    self.ingt_obj_list.clear()
     for meal in self.meal_obj_list:
       self.add_ingts(meal)
     

@@ -78,24 +78,25 @@ def display_remove_menu(meal_obj_list):
   display_numbered_list(meal_obj_list_disp)
 
 
-def display_numbered_list(string_list):
-  if isinstance(string_list, list):
-    for num in range(len(string_list)):
-      print(f"{num + 1}) {string_list[num]}")
-    print()
-  else:
-    raise TypeError("List object expected")
-
-
 def display_send_menu(ingt_obj_list):
   '''
     Displays the ingredient list with amounts to the user for final check before
     sending out to google keep.
       ingt_obj_list: List of ingredient objects
   '''
+  print(f"{Fore.LIGHTGREEN_EX}Here are all the igredients for the meals you have selected:{Style.RESET_ALL}")
+  print(f"{Fore.YELLOW}Enter 'r' to go back to the meal removal screen.{Style.RESET_ALL}")
+  for ingt in ingt_obj_list:
+    print(f" - {ingt.tostring}")
 
 
-
+def display_numbered_list(string_list):
+  if isinstance(string_list, list):
+    for num in range(len(string_list)):
+      print(f"{num + 1}) {string_list[num]}")
+    print()
+  else:
+    raise TypeError("List of strings object expected")
 
 
 def display_help_screen():
