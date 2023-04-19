@@ -87,7 +87,7 @@ def display_send_menu(ingt_obj_list):
   print(f"{Fore.LIGHTGREEN_EX}Here are all the igredients for the meals you have selected:{Style.RESET_ALL}")
   print(f"{Fore.YELLOW}Enter 'r' to go back to the meal removal screen.{Style.RESET_ALL}")
   for ingt in ingt_obj_list:
-    print(f" - {ingt.tostring}")
+    print(f" - {ingt.tostring()}")
 
 
 def display_numbered_list(string_list):

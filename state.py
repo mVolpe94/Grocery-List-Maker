@@ -55,7 +55,7 @@ class State:
     for meal in self.meal_obj_list:
       self.add_ingts(meal)
     
-    self.organize_ingt_list()
+    self.organize_ingt_list(self.ingt_obj_list)
 
 
   def add_ingts(self, meal):
@@ -67,15 +67,20 @@ class State:
     '''
     for ingredient in meal.ingredients:
       ingt_split = ingredient.split(" ")
-      title = ingt_split[0]
+      title = ""
       amount = meal.amount
       if ingt_split[0].isdigit():
-        amount = ingt_split[0] * meal.amount
+        amount = int(int(ingt_split[0]) * meal.amount)
         title = ""
         for index in range(len(ingt_split)):
           if index > 0:
             title += ingt_split[index] + " "
         title = title.strip()
+      else:
+        for word in ingt_split:
+          title += word + " "
+        title = title.strip()
+      
       self.ingt_obj_list.append(self.create_ingt_obj(title, amount))
 
 
@@ -88,14 +93,29 @@ class State:
     return ingt
  
 
-  def organize_ingt_list(self):
-    for index in range(len(self.ingt_obj_list)):
-      for ingt_compare in list.copy(self.ingt_obj_list):
-        if index != self.ingt_obj_list.index(ingt_compare):
-          if self.ingt_obj_list[index] == ingt_compare:
-            self.ingt_obj_list[index].amount += ingt_compare.amount
-            self.ingt_obj_list.remove(ingt_compare)
+  # def organize_ingt_list(self):
+  #   buffer_ingt_list = self.ingt_obj_list.copy()
+  #   for index in range(len(self.ingt_obj_list)):
+  #     for ingt_compare in list.copy(self.ingt_obj_list):
+  #       if index != self.ingt_obj_list.index(ingt_compare):
+  #         if buffer_ingt_list[index] == ingt_compare:
+  #           buffer_ingt_list[index].amount += ingt_compare.amount
+  #           buffer_ingt_list.remove(ingt_compare)
+  #   self.ingt_obj_list = buffer_ingt_list
 
+
+  def organize_ingt_list(self, ingt_obj_list):
+    for ingt_obj in ingt_obj_list:
+      for ingt_compare in ingt_obj_list:
+        ingt_index = ingt_obj_list.index(ingt_obj)
+        ingt_comp_index = ingt_obj_list.index(ingt_compare)
+        if ingt_index != ingt_comp_index:
+          if ingt_obj == ingt_compare: 
+            ## This code is not being accessed...
+            ingt_obj.amount = int(ingt_obj.amount + ingt_compare.amount)
+            ingt_obj_list.remove(ingt_compare)
+            self.organize_ingt_list(ingt_obj_list)
+    self.ingt_obj_list = ingt_obj_list
 
   def remove_meal(self, index):
     '''
@@ -108,3 +128,13 @@ class State:
         obj.amount -= 1
       else:
         self.meal_obj_list.remove(obj)
+
+
+if __name__ == "__main__":
+  s = State()
+  test_meal = meal.Meal("Pepper Stew", ["3 bell peppers", "4 jalapenos", "garlic"], "Dinner")
+
+  s.add_ingts(test_meal)
+
+  for ingt in s.ingt_obj_list:
+    print(str(ingt.amount) + " " + ingt.title)
