@@ -105,13 +105,13 @@ class State:
 
 
   def organize_ingt_list(self, ingt_obj_list):
-    for ingt_obj in ingt_obj_list:
-      for ingt_compare in ingt_obj_list:
-        ingt_index = ingt_obj_list.index(ingt_obj)
-        ingt_comp_index = ingt_obj_list.index(ingt_compare)
+    for ingt_index in range(len(ingt_obj_list)):
+      for ingt_comp_index in range(len(ingt_obj_list)):
         if ingt_index != ingt_comp_index:
-          if ingt_obj == ingt_compare: 
-            ## This code is not being accessed...
+          ingt_obj = ingt_obj_list[ingt_index]
+          ingt_compare = ingt_obj_list[ingt_comp_index]
+          if ingt_obj == ingt_compare:
+            ## This code now removes the wrong object and does not update the amount of ingredient.
             ingt_obj.amount = int(ingt_obj.amount + ingt_compare.amount)
             ingt_obj_list.remove(ingt_compare)
             self.organize_ingt_list(ingt_obj_list)
