@@ -41,22 +41,40 @@ def send(ingt_obj_list):
     via the sync call
       ingt_obj_list: List of ingredient objects from current state
   '''
-  auth = get_auth()
-  collab = get_collab()
+  try:
+    #Get creds and collabs
+    auth = get_auth()
+    collab = get_collab()
 
-  date = dt.datetime.now().strftime("%m-%d-%Y")
-  title = f"Grocery List: {date}"
+    #Set title text
+    date = dt.datetime.now().strftime("%m-%d-%Y")
+    title = f"Grocery List: {date}"
 
-  ingredient_list = ingt_keep_list(ingt_obj_list)
+    #Set up ingredient list for send
+    ingredient_list = ingt_keep_list(ingt_obj_list)
 
-  keep = gkeepapi.Keep()
-  keep.login(auth["user"], auth["pass"])
+    #Set up Keep object
+    keep = gkeepapi.Keep()
+    keep.login(auth["user"], auth["pass"])
 
-  glist = keep.createList(title, ingredient_list)
-  glist.collaborators.add(collab["email1"])
-  glist.collaborators.add(collab["email2"])
+    #Create Keep List and collabs
+    glist = keep.createList(title, ingredient_list)
+    glist.collaborators.add(collab["email1"])
+    glist.collaborators.add(collab["email2"])
 
-  keep.sync()
+    #Send to Google Keep
+    keep.sync()
+    return True
+  
+  except Exception as e:
+    cur_time = dt.datetime.now().strftime("%m-%d-%y %H:%M:%S")
+    with open("error.log", 'a') as log:
+      log.write(f"[Error: {cur_time}] \n")
+      log.write(str(e) + "\n")
+      log.write("\n")
+      log.close()
+    return False
+
 
 
 def ingt_keep_list(ingt_obj_list):
@@ -64,6 +82,7 @@ def ingt_keep_list(ingt_obj_list):
   for ingredient in ingt_obj_list:
     title = ingredient.tostring()
     ingt_str_list.append((title, False))
+  return ingt_str_list
 
 if __name__ == "__main__":
   get_auth()

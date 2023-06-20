@@ -55,7 +55,7 @@ class State:
     for meal in self.meal_obj_list:
       self.add_ingts(meal)
     
-    self.organize_ingt_list(self.ingt_obj_list)
+    #self.organize_ingt_list(self.ingt_obj_list)
 
 
   def add_ingts(self, meal):
@@ -81,7 +81,11 @@ class State:
           title += word + " "
         title = title.strip()
       
-      self.ingt_obj_list.append(self.create_ingt_obj(title, amount))
+      ingredient = self.create_ingt_obj(title, amount)
+
+      is_ingt_exist = self.check_ingt_exists(ingredient)
+      if not is_ingt_exist:
+        self.ingt_obj_list.append(ingredient)
 
 
   def create_ingt_obj(self, title, amount=1):
@@ -92,6 +96,14 @@ class State:
     ingt = ingredient.Ingredient(title, amount)
     return ingt
  
+
+  def check_ingt_exists(self, ingredient):
+    for ingt_index in range(len(self.ingt_obj_list)):
+      if self.ingt_obj_list[ingt_index] == ingredient:
+        self.ingt_obj_list[ingt_index].amount += ingredient.amount
+        return True
+    return False
+
 
   # def organize_ingt_list(self):
   #   buffer_ingt_list = self.ingt_obj_list.copy()

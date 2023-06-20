@@ -42,8 +42,8 @@ def display_cur_choices(meal_obj_list, sheets):
       temp_selections[category].append(meal_obj.title + amount)
 
     keys = list(temp_selections.keys())
-    print(meal_obj_list[0].title)
-    print(temp_selections)
+    # print(meal_obj_list[0].title)
+    # print(temp_selections)
     for sheet_name in sheets:
       if keys.count(sheet_name) > 0:
         print(f"{sheet_name}:")
@@ -123,3 +123,11 @@ def input_int_check(inp, range):
   else:
     return False
 
+
+def display_final_screen():
+  print(f"{Fore.LIGHTGREEN_EX}Sent!")
+  print()
+  print(f"{Fore.YELLOW}Your grocery list was created and sent.")
+  print(f"{Fore.MAGENTA}Have a great day!{Style.RESET_ALL}")
+  print()
+  print()

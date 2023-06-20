@@ -3,6 +3,7 @@
 
 import ingredient
 import excel_reader as er
+import gkeep
 import state
 import meal
 import utility as old_utl
@@ -16,6 +17,7 @@ from colorama import Style
 
 s = state.State()
 is_correct = True
+response = True
 error_message = None
 
 while s.running:
@@ -120,10 +122,27 @@ while s.running:
           is_correct = True
 
     #Send? Frame
+    ###This needs error protection and ways to go back
     case 5:
       s.fill_ingt_list()
       utl.display_send_menu(s.ingt_obj_list)
+      if not is_correct:
+        print(f"{Fore.RED}ERROR: Input not recognized, please press enter to send or type 'y' or 'n' to proceed. {Style.RESET_ALL}")
+      elif not response:
+        print(f"{Fore.RED}ERROR: Could not reach Google Keep service, check internet connection and try again.")
+        print(f"If you see this message again after ensuring internet connection, check error.log for more info{Style.RESET_ALL}")
       s.inp = input("Send? (Y/n):")
+      if s.inp == "" or s.inp.lower() == "y":
+        is_correct = True
+        response = gkeep.send(s.ingt_obj_list)
+        if response:
+          s.next = s.CONTROL[7]
+      elif s.inp.lower() == "n":
+        s.next = s.CONTROL[3]
+        is_correct = True
+      else:
+        s.next = s.CONTROL[5]
+        is_correct = False
 
     #Help Frame
     case 6:
@@ -131,7 +150,14 @@ while s.running:
       s.inp = input("Press enter to leave help screen: ")
       if s.inp.strip() == "":
         s.inp = "b"
+
+    #Fin Frame
+    case 7:
+      utl.display_final_screen()
+      s.running = False
   
+
+  #Input checks
   if s.inp.lower() == "r":
     s.next = s.CONTROL[4]
     is_correct = True
