@@ -6,7 +6,9 @@ from colorama import Style
 
 
 def splash_message(path = "splash.txt"):
-  '''Displays a .txt file at path onto the console.'''
+  '''
+    Displays a .txt file at path onto the console.
+  '''
   with open(path, "r") as splash:
     lines = splash.read().split('\n')
   for line in lines:
@@ -16,16 +18,19 @@ def splash_message(path = "splash.txt"):
 def display_meal_cat_menu(sheets):
   '''
     Takes list of excel sheet titles and displays meal categories
+      sheets: A list of strings of the sheet names found in the excel file.
   '''
   print("Please select what category of meals by typing the number beside your choice")
   print()
-  
   display_numbered_list(sheets)
 
 
-#Error where after selecting a different meal category and there is only one selection in a previous category
-#the temp_selections dict ignores the previous choice in that categroy
 def display_cur_choices(meal_obj_list, sheets):
+  '''
+    Takes all current meal choices made by the user and displays them in a tiered list.
+      meal_obj_list: A list of Meal objects
+      sheets: A list of strings of the sheet names found in the excel file.
+  '''
   if len(meal_obj_list) > 0:
     print(f"{Fore.LIGHTGREEN_EX}Here are all of your selections so far:{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}Enter 'r' to remove any current selections.{Style.RESET_ALL}")
@@ -42,8 +47,6 @@ def display_cur_choices(meal_obj_list, sheets):
       temp_selections[category].append(meal_obj.title + amount)
 
     keys = list(temp_selections.keys())
-    # print(meal_obj_list[0].title)
-    # print(temp_selections)
     for sheet_name in sheets:
       if keys.count(sheet_name) > 0:
         print(f"{sheet_name}:")
@@ -53,6 +56,10 @@ def display_cur_choices(meal_obj_list, sheets):
 
 
 def display_meal_menu(sheet):
+  '''
+    Displays the list of meals found in the currently selected meal category.
+      sheet: string containing the name of a meal category found in the excel file.
+  '''
   meals = er.get_col_names(sheet)
 
   print("Please type the number of each meal you would like to add separated by a space")
@@ -64,6 +71,10 @@ def display_meal_menu(sheet):
 
 
 def display_remove_menu(meal_obj_list):
+  '''
+    This displays the meal removal menu text.
+      meal_obj_list: List containing Meal objects
+  '''
   print(f"{Fore.YELLOW}Select from the menu which meals you would like to remove:{Style.RESET_ALL}")
   print(f"{Fore.YELLOW}Enter 'e' to exit this menu{Style.RESET_ALL}")
   print()
@@ -91,6 +102,10 @@ def display_send_menu(ingt_obj_list):
 
 
 def display_numbered_list(string_list):
+  '''
+    Displays a list of strings as those strings with numbers in sequence before them
+      string_list: List of strings
+  '''
   if isinstance(string_list, list):
     for num in range(len(string_list)):
       print(f"{num + 1}) {string_list[num]}")
@@ -100,6 +115,9 @@ def display_numbered_list(string_list):
 
 
 def display_help_screen():
+  '''
+    Displays the help screen, informs user on some keys they can always enter and what they do.
+  '''
   print(f"{Fore.YELLOW}Welcome to the Help Screen{Style.RESET_ALL}")
   print("Below is a list of commands and what they do:")
   print()
@@ -114,6 +132,11 @@ def display_help_screen():
 
 
 def input_int_check(inp, range):
+  '''
+    This checks if inp is an integer, then checks if its value is between 0 and range.
+      inp: user input integer to check
+      range: What max range to check
+  '''
   try:
     sel = int(inp)
   except:
@@ -125,6 +148,9 @@ def input_int_check(inp, range):
 
 
 def display_final_screen():
+  '''
+    Displays final screen text.
+  '''
   print(f"{Fore.LIGHTGREEN_EX}Sent!")
   print()
   print(f"{Fore.YELLOW}Your grocery list was created and sent.")

@@ -1,38 +1,82 @@
+'''
+This contains all the methods to use gkeepapi to add notes to Google Keep
+
+!!!
+####YOU MUST SET UP TWO FILES IN THE SAME FOLDER AS THIS FILE####
+!!!
+
+The first file should be titled: "auth.json"
+
+It should contain this json object with your own email and password:
+
+{
+
+  "user": "yourreallycoolemail@gmail.com",
+
+  "pass": "yoursupersecurepassword",
+
+  "master": null
+
+}
+
+I believe you can use environment variables for this to make it more secure, however, 
+for my purposes this was enough, I think...
+
+The second file is only there if you want to add any other users to the note so 
+they can see the grocery list too.
+
+It should be titled: "collab.json"
+
+It should contain this json object with two added emails:
+
+{
+
+    "email1": "yoursupercoolemail@gmail.com",
+
+    "email2": "yourSOssupercoolemail@gmail.com"
+
+}
+
+In the code these two entries are referenced directly, however, with a bit of tinkering
+it could be made to loop across many entries in this object.
+'''
+
+
 import datetime as dt
 import gkeepapi
 import json
 import jsonpickle
 
 
-#Send the list of ingredients
-#Set up keep object and login using master key stored in auth.json
-#Iterate over ingredient data
-#Add colaborators
-#Fine
-
 def get_auth(file="auth.json"):
   '''
     This method grabs auth data from external json file
   '''
-  with open(file) as jsn:
-    json_str = jsn.read()
-    data = jsonpickle.unpickler.decode(json_str)
+  try:
+    with open(file) as jsn:
+      json_str = jsn.read()
+      data = jsonpickle.unpickler.decode(json_str)
 
-  if data["master"] != None:
-    auth = {"user": data["user"], "pass": data["master"]}
-  else:
-    auth = {"user": data["user"], "pass": data["pass"]}
-    
-  return auth
+    if data["master"] != None:
+      auth = {"user": data["user"], "pass": data["master"]}
+    else:
+      auth = {"user": data["user"], "pass": data["pass"]}
+      
+    return auth
+  except Exception as e:
+    print(e)
 
 
 def get_collab(file="collab.json"):
   '''
     This method grabs collaborator data from external json file
   '''
-  with open(file) as collab:
-    json_str = collab.read()
-    return jsonpickle.unpickler.decode(json_str)
+  try:
+    with open(file) as collab:
+      json_str = collab.read()
+      return jsonpickle.unpickler.decode(json_str)
+  except Exception as e:
+    print(e)
   
 
 def send(ingt_obj_list):
@@ -76,13 +120,9 @@ def send(ingt_obj_list):
     return False
 
 
-
 def ingt_keep_list(ingt_obj_list):
   ingt_str_list = []
   for ingredient in ingt_obj_list:
     title = ingredient.tostring()
     ingt_str_list.append((title, False))
   return ingt_str_list
-
-if __name__ == "__main__":
-  get_auth()

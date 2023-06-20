@@ -1,5 +1,6 @@
 import inflect
 
+
 class Ingredient:
   def __init__(self, title, amount=1):
     p = inflect.engine()

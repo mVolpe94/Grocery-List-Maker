@@ -1,5 +1,64 @@
-# This code will generate a list of groceries based on user 
-# selected meals found in excel database and save it to a file.
+'''
+Thank you for using Kate's Grocery List Maker! Kate is my wife's name, this was made to help her meal plan 
+for us you the week. Hope it can help you too!
+
+
+This app assists the user in creating grocery lists and sends them to a Google Keep List for use when shopping.
+It requires some setup to be useful to you. The most important is the excel file that the excel_reader.py will
+pull all the meal data from. 
+
+
+Directions to set up the excel file:
+
+1) Each new sheet will be a new category of meals (Breakfast, Lunch, Dinner, Dessert, etc.)
+
+2) The title of each meal should be in the A row, not column
+
+3) The ingredients needed for each meal should be found underneath the meal title
+  | Each ingredient can have an integer amount in front of it and this will be used to determine the amount of that ingredient. Units and floats are not supported at this time.
+
+4) Place the file in the same directory as excel_reader.py
+
+
+
+There are two json files that need to be set by the user so the grocery list gets sent to the correct 
+gmail accounts.
+
+The first file should be titled: "auth.json"
+
+It should contain this json object with your own email and password:
+
+{
+
+  "user": "yourreallycoolemail@gmail.com",
+
+  "pass": "yoursupersecurepassword",
+
+  "master": null
+
+}
+
+I believe you can use environment variables for this to make it more secure, however, 
+for my purposes this was enough, I think...
+
+
+
+The second file is only there if you want to add any other users to the note so 
+they can see the grocery list too.
+
+It should be titled: "collab.json"
+
+It should contain this json object with two added emails:
+
+{
+
+    "email1": "yoursupercoolemail@gmail.com",
+
+    "email2": "yourSOssupercoolemail@gmail.com"
+
+}
+'''
+
 
 import ingredient
 import excel_reader as er
@@ -14,12 +73,14 @@ from colorama import Fore
 from colorama import Style
 
 
-
+#Setup Variables
 s = state.State()
 is_correct = True
 response = True
 error_message = None
 
+
+#Main Loop
 while s.running:
   os.system("cls")
   utl.splash_message()
@@ -122,7 +183,6 @@ while s.running:
           is_correct = True
 
     #Send? Frame
-    ###This needs error protection and ways to go back
     case 5:
       s.fill_ingt_list()
       utl.display_send_menu(s.ingt_obj_list)
@@ -176,4 +236,5 @@ while s.running:
     is_correct = True
 
 
-
+if __name__ == "__main__":
+  s.running = True

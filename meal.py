@@ -1,5 +1,6 @@
 import inflect
 
+
 class Meal:
   def __init__(self, title, ingredients, sheet, amount = 1):
     self.title = title
@@ -7,11 +8,14 @@ class Meal:
     self.ingredients = ingredients
     self.amount = amount
 
+
   def __eq__(self, other):
     return self.title == other.title
 
+
   def __str__(self):
     return self.title
+
 
   def get_match_list(self):
     p = inflect.engine()
