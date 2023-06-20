@@ -10,7 +10,7 @@ class State:
     self.next = self.CONTROL[0]
     self.SHEETS = er.get_sheet_names()
     self.prev_frames = []
-    self.running = False
+    self.running = True
 
     self.inp = ""
     self.meal_sheet = ""
