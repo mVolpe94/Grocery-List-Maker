@@ -44,7 +44,6 @@ it could be made to loop across many entries in this object.
 
 import datetime as dt
 import gkeepapi
-import json
 import jsonpickle
 
 
