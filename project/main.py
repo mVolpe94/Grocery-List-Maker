@@ -209,6 +209,7 @@ while s.running:
     #Fin Frame
     case 7:
       utl.display_final_screen()
+      s.inp = input("Press enter to exit")
       s.running = False
   
 
